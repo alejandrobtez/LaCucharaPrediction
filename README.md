@@ -18,7 +18,7 @@ The project addresses the gap between restaurant supply and office worker demand
 
 The platform utilizes **Firebase** to manage a secure, multi-role ecosystem. The system differentiates between two main user types: **Diners** (office workers) and **Restaurant Owners**.
 
-![Login Screen](login.png)
+![Login Screen](img/login.png)
 > **Fig 1.** *Login Interface: Custom registration and login flows for both customers and restaurants.*
 
 ### Multi-Method Access
@@ -28,7 +28,7 @@ We have enabled various authentication providers to ensure a frictionless experi
 
 | Firebase Configuration | User Management |
 | :--- | :--- |
-| ![Firebase Methods](firebasemethods.png) | ![Firebase Users](firebaseusers.png) |
+| ![Firebase Methods](img/firebasemethods.png) | ![Firebase Users](img/firebaseusers.png) |
 | *Enabled Auth providers.* | *Cloud-based user directory.* |
 
 ---
@@ -37,14 +37,14 @@ We have enabled various authentication providers to ensure a frictionless experi
 
 To eliminate manual data entry, we developed a high-precision extraction system using **Azure Document Intelligence**.
 
-![OCR Process](ocr.png)
+![OCR Process](img/ocr.png)
 > **Fig 2.** *Menu Upload: Restaurants can upload a photo of their physical menu. The system also allows for manual input as a fallback.*
 
 ### Entity Extraction & Verification
 *   **Automated Reading:** The custom model identifies dishes and prices.
 *   **Human-in-the-loop:** Before publishing, owners can review and edit the OCR output to ensure 100% accuracy.
 
-![OCR Result](ocr2.png)
+![OCR Result](img/ocr2.png)
 > **Fig 3.** *OCR Output: Structured menu data ready for final review and publication.*
 
 ---
@@ -58,18 +58,18 @@ Owners have access to a specialized dashboard that uses AI to provide:
 *   **Occupancy Predictions:** Based on the specific day of the year.
 *   **AI Recommendations:** Smart suggestions for the "Dish of the Day" based on trends.
 
-![Restaurant Dashboard](restauantdashboard.png)
+![Restaurant Dashboard](img/restauantdashboard.png)
 > **Fig 4.** *Admin View: Real-time status, menu reminders, and AI-driven culinary suggestions.*
 
 ### 2. Predictive Models
 The system calculates potential demand by crossing the current menu with external factors (weather, events, holidays).
 
-![Prediction OCR](predictionocr.png)
+![Prediction OCR](img/predictionocr.png)
 > **Fig 5.** *Demand analysis interface based on the uploaded menu.*
 
 > **Note:** The predictive model is trained on **synthetic data**. While it demonstrates the architectural capability, its real-world precision is limited by the training dataset's simulated nature.
 
-![Prediction Dashboard](predictiondashboard.png)
+![Prediction Dashboard](img/predictiondashboard.png)
 > **Fig 6.** *Occupancy forecasting based on specific environmental conditions.*
 
 ---
@@ -78,14 +78,14 @@ The system calculates potential demand by crossing the current menu with externa
 
 For the office worker, **La Cuchara** acts as a smart concierge for their lunch break.
 
-![Client Home](clientmenu.png)
+![Client Home](img/clientmenu.png)
 > **Fig 7.** *Home Screen: Personalized menu recommendations based on the user's dietary profile.*
 
 ### Smart Discovery
 *   **Dietary Filtering:** Users can filter AZCA's offerings by vegan, gluten-free, or keto preferences.
 *   **Live Menus:** Direct access to all published menus in the area with updated pricing.
 
-![Client Dashboard](clientdashboard.png)
+![Client Dashboard](img/clientdashboard.png)
 > **Fig 8.** *Search & Filter: Finding the perfect meal in AZCA based on real-time availability.*
 
 ---
