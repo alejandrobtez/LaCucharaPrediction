@@ -58,7 +58,7 @@ Owners have access to a specialized dashboard that uses AI to provide:
 *   **Occupancy Predictions:** Based on the specific day of the year.
 *   **AI Recommendations:** Smart suggestions for the "Dish of the Day" based on trends.
 
-![Restaurant Dashboard](img/restauantdashboard.png)
+![Restaurant Dashboard](img/restaurantdashboard.png)
 > **Fig 4.** *Admin View: Real-time status, menu reminders, and AI-driven culinary suggestions.*
 
 ### 2. Predictive Models
@@ -99,4 +99,4 @@ For the office worker, **La Cuchara** acts as a smart concierge for their lunch 
 *   **Infrastructure:** Azure AI Foundry / ML Studio.
 
 ---
-*Project developed as part of the Master's Degree in AI & Big Data.*
+*Project developed as part of the Master's Degree in AI & Big Data by Alejandro Benítez.*
