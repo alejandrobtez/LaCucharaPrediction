@@ -14,72 +14,87 @@ The project addresses the gap between restaurant supply and office worker demand
 
 ---
 
-## ☁️ Cloud Infrastructure & Authentication
+## 🔐 Authentication & Identity Management (Firebase)
 
-The platform is built on a robust hybrid architecture, utilizing **Microsoft Azure** for AI heavy-lifting and **Firebase** for secure identity management.
+The platform utilizes **Firebase** to manage a secure, multi-role ecosystem. The system differentiates between two main user types: **Diners** (office workers) and **Restaurant Owners**.
 
-*   **Identity Management:** Integrated **Firebase Authentication** to provide secure, seamless login/signup flows for both office workers and restaurant owners.
-*   **AI Services:** Integration of **Azure OpenAI** for menu structuring and **Document Intelligence** for OCR.
-*   **Data Persistence:** **Azure SQL Database** for relational data storage and **Blob Storage** for hosting menu images.
+![Login Screen](login.png)
+> **Fig 1.** *Login Interface: Custom registration and login flows for both customers and restaurants.*
 
----
+### Multi-Method Access
+We have enabled various authentication providers to ensure a frictionless experience:
+*   **Methods:** Email/Password, Google Sign-In, and Phone Authentication.
+*   **User Management:** Centralized control via the Firebase Console for real-time monitoring.
 
-## 🧠 AI Pipeline & Entity Training
-
-The heart of "La Cuchara" is its dual-stage AI pipeline, which transforms physical menus into actionable data and predicts future sales.
-
-### 1. Smart Menu Digitization (OCR & NLP)
-Hosteliers simply take a photo of their handwritten or printed menu boards.
-*   **Extraction:** Azure Document Intelligence extracts raw text.
-*   **Entity Training:** The model has been fine-tuned to achieve high precision in identifying specific entities such as **Dish Names, Prices, and Dietary Labels**.
-*   **Structuring:** GPT-4o-mini categorizes dishes and identifies allergens to enable smart filtering.
-
-### 2. Predictive Demand Model (XGBoost)
-To prevent overproduction, the system predicts the number of servings needed.
-*   **Contextual Variables:** The **XGBoost Regressor** analyzes historical sales cross-referenced with **weather conditions**, **Real Madrid matches at the Bernabéu stadium**, and local bank holidays.
+| Firebase Configuration | User Management |
+| :--- | :--- |
+| ![Firebase Methods](firebasemethods.png) | ![Firebase Users](firebaseusers.png) |
+| *Enabled Auth providers.* | *Cloud-based user directory.* |
 
 ---
 
-## ⚙️ The Processing Engine (Python & Next.js)
+## 🧠 AI Pipeline: Smart Menu Digitization (OCR)
 
-The project architecture separates the user-facing application from the specialized data logic.
+To eliminate manual data entry, we developed a high-precision extraction system using **Azure Document Intelligence**.
 
-### 1. Frontend & Real-Time Interaction
-Developed with **Next.js 14**, the app provides office workers with a "Crowd Traffic Light" (Semáforo de afluencia) to avoid peak-hour queues.
+![OCR Process](ocr.png)
+> **Fig 2.** *Menu Upload: Restaurants can upload a photo of their physical menu. The system also allows for manual input as a fallback.*
 
-### 2. Backend & ETL Logic (`/ai_pipeline`)
-The orchestration is managed by a Python-based flow:
-1.  **Ingestion:** Detects new menu uploads in Azure Blob Storage.
-2.  **Processing:** Sends data to the Custom AI Model for entity extraction.
-3.  **Transformation:** Cleans and normalizes the data via **SQLAlchemy**.
-4.  **Inference:** Runs the XGBoost model to generate demand forecasts.
+### Entity Extraction & Verification
+*   **Automated Reading:** The custom model identifies dishes and prices.
+*   **Human-in-the-loop:** Before publishing, owners can review and edit the OCR output to ensure 100% accuracy.
 
----
-
-## 🗄️ Persistence & Validation (SQL Server)
-
-All structured menus, user preferences, and prediction results are stored in an **Azure SQL Database**. For project verification and data management, we use **Azure Data Studio** and **SSMS**.
-
-*   **Data Integrity:** Relational models ensure that every dish is linked to its restaurant, price history, and predicted sales.
-*   **Analytics:** The database allows for real-time queries to visualize consumption patterns across the AZCA district.
+![OCR Result](ocr2.png)
+> **Fig 3.** *OCR Output: Structured menu data ready for final review and publication.*
 
 ---
 
-## ✨ Main Features
+## 📈 Demand Forecasting & Analytics
 
-*   **🔐 Secure Access:** Role-based authentication via **Firebase** (User vs. Restaurant Admin).
-*   **🛡️ Zero Friction:** No manual typing; a simple photo digitizes the entire restaurant offering instantly.
-*   **🌍 Sustainability:** Significant reduction in food waste by aligning kitchen prep with AI-predicted demand.
-*   **🚦 Live Occupancy:** A status system to help workers avoid queues and optimize their lunch break.
-*   **🥗 Intelligent Filtering:** Advanced search for specific dietary needs (Celiac, Vegan, Keto) powered by NLP.
+The project features a predictive engine powered by **XGBoost** and **Azure ML**, designed to help chefs plan their inventory.
+
+### 1. Restaurant Insights
+Owners have access to a specialized dashboard that uses AI to provide:
+*   **Occupancy Predictions:** Based on the specific day of the year.
+*   **AI Recommendations:** Smart suggestions for the "Dish of the Day" based on trends.
+
+![Restaurant Dashboard](restauantdashboard.png)
+> **Fig 4.** *Admin View: Real-time status, menu reminders, and AI-driven culinary suggestions.*
+
+### 2. Predictive Models
+The system calculates potential demand by crossing the current menu with external factors (weather, events, holidays).
+
+![Prediction OCR](predictionocr.png)
+> **Fig 5.** *Demand analysis interface based on the uploaded menu.*
+
+> **Note:** The predictive model is trained on **synthetic data**. While it demonstrates the architectural capability, its real-world precision is limited by the training dataset's simulated nature.
+
+![Prediction Dashboard](predictiondashboard.png)
+> **Fig 6.** *Occupancy forecasting based on specific environmental conditions.*
+
+---
+
+## 🥗 The Customer Experience (Diner App)
+
+For the office worker, **La Cuchara** acts as a smart concierge for their lunch break.
+
+![Client Home](clientmenu.png)
+> **Fig 7.** *Home Screen: Personalized menu recommendations based on the user's dietary profile.*
+
+### Smart Discovery
+*   **Dietary Filtering:** Users can filter AZCA's offerings by vegan, gluten-free, or keto preferences.
+*   **Live Menus:** Direct access to all published menus in the area with updated pricing.
+
+![Client Dashboard](clientdashboard.png)
+> **Fig 8.** *Search & Filter: Finding the perfect meal in AZCA based on real-time availability.*
 
 ---
 
 ## 🛠️ Technologies Used
 
 *   **Frontend:** Next.js 14 (App Router), Tailwind CSS, Framer Motion.
-*   **Authentication:** Firebase Auth.
-*   **AI/ML:** Azure Document Intelligence, Azure OpenAI (GPT-4o-mini), XGBoost.
+*   **Authentication:** Firebase Auth (Google, Phone, Email).
+*   **AI/ML:** Azure Document Intelligence (Custom Neural Models), Azure OpenAI (GPT-4o-mini), XGBoost.
 *   **Data & Backend:** Azure SQL Database, SQLAlchemy, Python 3.9+.
 *   **Infrastructure:** Azure AI Foundry / ML Studio.
 
