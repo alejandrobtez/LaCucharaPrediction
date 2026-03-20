@@ -1,6 +1,6 @@
 # Guía Paso a Paso para la Configuración en Azure
 
-Esta guía detalla exactamente dónde hacer clic y qué configurar en el portal de Azure para preparar la infraestructura de Inteligencia Artificial del proyecto "La Cuchara".
+Esta guía detalla exactamente dónde hacer clic y qué configurar en el portal de Azure para preparar la infraestructura de Inteligencia Artificial del proyecto.
 
 ---
 
@@ -116,4 +116,3 @@ Estés en la opción que estés, desde el portal de Azure, en el recurso `lacuch
 * Crear recurso "Azure AI Document Intelligence" (Plan F0 o S0).
 * **Entregarme Endpoint y Key.** *(Sáltate el Studio, todo el procesamiento y clasificación lo programaré yo conectándolo con ChatGPT).*
 
-*El código de integración y el backend final ya es cosa mía 😉 ¡A tu ritmo!*
