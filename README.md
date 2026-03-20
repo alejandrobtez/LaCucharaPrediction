@@ -94,7 +94,7 @@ For the office worker, **La Cuchara** acts as a smart concierge for their lunch 
 
 *   **Frontend:** Next.js 14 (App Router), Tailwind CSS, Framer Motion.
 *   **Authentication:** Firebase Auth (Google, Phone, Email).
-*   **AI/ML:** Azure Document Intelligence (Custom Neural Models), Azure OpenAI (GPT-4o-mini), XGBoost.
+*   **AI/ML:** Azure Document Intelligence (OCR), Azure OpenAI (GPT-4o-mini), XGBoost.
 *   **Data & Backend:** Azure SQL Database, SQLAlchemy, Python 3.9+.
 *   **Infrastructure:** Azure AI Foundry / ML Studio.
 
