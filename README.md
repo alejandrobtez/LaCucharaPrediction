@@ -1,82 +1,68 @@
-# 🥄 La Cuchara — Inteligencia Artificial para la Hostelería en AZCA
+🥄 La Cuchara — AI-Powered Hospitality Optimization
+Smart Gastronomy and Demand Forecasting for the AZCA Business District
+🚀 QUICK VIEW: You can explore the core logic of the prediction models and data processing here: 🤖 ai_pipeline/
 
-![Status](https://img.shields.io/badge/Status-Beta-brightgreen)
-![Next.js](https://img.shields.io/badge/Framework-Next.js%2014-black)
-![Azure](https://img.shields.io/badge/Cloud-Azure%20Services-blue)
+📖 About the Project
+La Cuchara (The Spoon) is an advanced technological solution designed to optimize the dining experience and operational management in AZCA, Madrid’s premier business district.
 
-**La Cuchara** es una solución tecnológica avanzada diseñada para optimizar la experiencia gastronómica y la gestión operativa en la zona empresarial de **Azca (Madrid)**. El proyecto combina Inteligencia Artificial, Visión por Computador y Análisis de Datos para reducir la merma en restaurantes y mejorar la toma de decisiones del cliente final.
+The project addresses the gap between restaurant supply and office worker demand. By combining Computer Vision, Natural Language Processing (NLP), and Predictive Analytics, it aims to drastically reduce food waste (merma) while eliminating "menu uncertainty" for thousands of daily diners.
 
----
+☁️ Cloud Infrastructure (Azure)
+The platform is built on a robust Microsoft Azure backbone, utilizing a hybrid architecture to handle both the user-facing web application and the heavy-lifting AI processes.
 
-## 🚀 La Solución
+Fig 1. Azure Resource Group: Integration of Azure OpenAI for menu structuring, Document Intelligence for OCR, and Azure SQL for relational data persistence.
 
-La plataforma ofrece una experiencia dual para equilibrar la oferta y la demanda en tiempo real:
+🧠 AI Pipeline & Demand Forecasting
+The heart of "La Cuchara" is its dual-stage AI pipeline, which transforms physical menus into actionable data and predicts future sales.
 
-1.  **Para el Oficinista:** Una aplicación web moderna para explorar los menús del día, filtrar por preferencias dietéticas (celiacos, veganos, etc.) y consultar un semáforo de afluencia para evitar colas.
-2.  **Para el Hostelero:** Digitalización instantánea de menús mediante OCR y predicción inteligente de demanda basada en variables externas (clima, eventos en el Bernabéu, festivos, etc.).
+1. Smart Menu Digitization (OCR & NLP)
+Hosteliers simply take a photo of their handwritten or printed daily specials.
 
----
+Extraction: Azure Document Intelligence extracts raw text.
 
-## 🛠️ Tecnologías Utilizadas
+Structuring: GPT-4o-mini categorizes dishes, identifies allergens, and infers ingredients to enable smart filtering for users (e.g., vegan, gluten-free).
 
-### Frontend & App
-- **Next.js 14** (App Router, TypeScript)
-- **Tailwind CSS** para un diseño premium y responsivo.
-- **Framer Motion** para micro-animaciones fluidas.
-- **Lucide React** para iconografía moderna.
+2. Predictive Demand Model (XGBoost)
+To prevent overproduction, the system predicts the number of servings needed for each dish.
 
-### Inteligencia Artificial (AI Pipeline) 🤖
-- **Azure Document Intelligence:** Extracción de texto de fotos de menús (OCR).
-- **Azure OpenAI (GPT-4o-mini):** Procesamiento de lenguaje natural para estructurar menús e inferir ingredientes.
-- **XGBoost Regressor:** Modelo de Machine Learning para la predicción de raciones vendidas.
+Fig 2. The XGBoost Regressor analyzes historical sales data cross-referenced with external variables: Weather conditions, Real Madrid matches at the Bernabéu, and local bank holidays.
 
-### Infraestructura & Datos
-- **Azure SQL Database:** Almacenamiento relacional de alta disponibilidad.
-- **Azure ML Studio / AI Foundry:** Despliegue del endpoint de predicción.
-- **SQLAlchemy:** ORM para la comunicación con la base de datos (Python).
+⚙️ The Processing Engine
+The project architecture is divided into a high-performance frontend and a specialized data logic layer.
 
----
+Frontend & Real-Time Interaction
+Developed with Next.js 14, the app provides office workers with a "Crowd Traffic Light" (Semáforo de afluencia) to avoid peak-hour queues and explore menus in real-time.
 
-## 📂 Estructura del Proyecto
+Backend & ETL Logic
+The ai_pipeline/ directory manages the lifecycle of data:
 
-El repositorio está organizado para separar la aplicación principal de la infraestructura de IA:
+Scripts: Automated generation of synthetic data and OCR processing.
 
--   `src/`, `public/`, `app/` — Código fuente de la aplicación **Next.js**.
--   `ai_pipeline/` — Contiene toda la lógica de datos y modelos:
-    -   `scripts/` — Generación de datos sintéticos y procesamiento OCR.
-    -   `src/db/` — Modelos de base de datos y scripts de conexión.
-    -   `models/` — Pipeline de entrenamiento del modelo de demanda.
--   `.env.example` — Plantilla de configuración de variables de entorno (Azure, SQL).
+Database Models: Managed via SQLAlchemy for seamless Python-to-SQL communication.
 
----
+Model Deployment: Endpoints hosted on Azure AI Foundry for real-time inference.
 
-## 🔧 Configuración e Instalación
+🗄️ Persistence & Validation (SQL Server)
+All structured menus, user preferences, and prediction results are stored in an Azure SQL Database. This ensures data integrity and allows for complex analytical queries regarding consumption patterns in the AZCA area.
 
-### Requisitos Previos
-- Node.js 18+
-- Python 3.9+ (para el AI Pipeline)
-- Credenciales de Azure (se requiere acceso a OpenAI y SQL Database)
+Fig 3. Validation of the structured menu table. Fields include dish descriptions, price, dietary tags, and the predicted demand vs. actual sales for continuous model retraining.
 
-### Instalación de la App
-```bash
-# Instalar dependencias
-npm install
+✨ Main Features
+🛡️ Zero Friction for Owners: No manual typing required; a simple photo digitizes the entire restaurant offering.
 
-# Iniciar en modo desarrollo
-npm run dev
-```
+🌍 Sustainability (Smart Inventory): Significant reduction in food waste by aligning kitchen prep with AI-predicted demand.
 
-### Variables de Entorno
-Crea un archivo `.env.local` basado en `.env.example` con tus claves de Azure y base de datos. **Nunca subas este archivo a GitHub.**
+🚦 Live Occupancy: A "traffic light" system based on historical and real-time data to improve user flow.
 
----
+🥗 Intelligent Filtering: Advanced search for specific dietary needs (Celiac, Vegan, Keto) powered by GPT-4o-mini ingredient inference.
 
-## 📈 Impacto del Proyecto (Smart Match & Smart Inventory)
+🛠️ Technologies Used
+Framework: Next.js 14 (App Router, TypeScript)
 
--   **Zero Friction:** Los hosteleros no cambian su flujo de trabajo; simplemente hacen una foto a su menú de pizarra.
--   **Sostenibilidad:** Reducción drástica del desperdicio alimentario mediante predicciones precisas basadas en el clima y eventos locales.
--   **User Experience:** Eliminación de la "incertidumbre del menú" para miles de trabajadores de la zona Azca.
+Styling: Tailwind CSS & Framer Motion
 
----
+AI/ML: Azure Document Intelligence, Azure OpenAI (GPT-4o-mini), XGBoost.
 
-*Proyecto desarrollado como parte del Máster en IA & Big Data.*
+Data & Backend: Azure SQL Database, SQLAlchemy, Python 3.9+.
+
+Infrastructure: Azure ML Studio / AI Foundry.
