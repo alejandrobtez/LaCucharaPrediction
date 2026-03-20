@@ -99,4 +99,4 @@ For the office worker, **La Cuchara** acts as a smart concierge for their lunch 
 *   **Infrastructure:** Azure AI Foundry / ML Studio.
 
 ---
-*Project developed as part of the Master's Degree in AI & Big Data by Alejandro Benítez.*
+*Project developed as part of the Master's Degree in AI & Big Data by @boorjanunezz & Alejandro Benítez.*
