@@ -100,3 +100,7 @@ For the office worker, **La Cuchara** acts as a smart concierge for their lunch 
 
 ---
 *Project developed as part of the Master's Degree in AI & Big Data by @boorjanunezz & Alejandro Benítez.*
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
