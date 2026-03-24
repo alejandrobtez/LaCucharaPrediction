@@ -1,4 +1,4 @@
-name: LaCuchara Unified Deployment
+name: LaCuchara Deployment
 
 on:
   push:
