@@ -4,7 +4,11 @@ import { cookies } from 'next/headers';
 import { queryDb } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
-const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY || "AIzaSyAm7dAuKASfALOyluViHWuJ9apOZyTtawY";
+const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+
+if (!FIREBASE_API_KEY) {
+  console.warn("⚠️ Advertencia: FIREBASE_API_KEY no detectada.");
+}
 
 export async function loginAction(formData: FormData) {
   const email = formData.get('email') as string;
