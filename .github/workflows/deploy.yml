@@ -1,0 +1,68 @@
+name: LaCuchara Full Stack Deployment
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Permite ejecución manual desde la pestaña Actions
+
+jobs:
+  # --- TRABAJO 1: COMPILACIÓN Y DESPLIEGUE NEXT.JS ---
+  build-and-deploy-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      - name: Next.js Build
+        run: npm run build
+        env:
+          # Variables necesarias para la compilación (Server Actions/Static Props)
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+
+      # Aquí iría el paso final de despliegue (ejemplo para Vercel o Azure)
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v20
+      #   with: ...
+
+  # --- TRABAJO 2: PIPELINE DE IA (PROCESAMIENTO) ---
+  run-ai-pipeline:
+    runs-on: ubuntu-latest
+    # Este job se ejecutará solo si el de la web termina con éxito
+    needs: build-and-deploy-web 
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python Dependencies
+        run: |
+          pip install -r ai_pipeline/requirements.txt
+
+      - name: Run OCR Processing Script
+        env:
+          AZURE_OCR_KEY: ${{ secrets.AZURE_OCR_KEY }}
+          AZURE_OCR_ENDPOINT: ${{ secrets.AZURE_OCR_ENDPOINT }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DB_URL: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: python ai_pipeline/scripts/process_menu_ocr.py
+
+      - name: Update Synthetic Data (Optional)
+        env:
+          DB_URL: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: python ai_pipeline/scripts/generate_synthetic_data.py
