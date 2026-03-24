@@ -2,7 +2,11 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY || "AIzaSyAm7dAuKASfALOyluViHWuJ9apOZyTtawY";
+const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+
+if (!FIREBASE_API_KEY) {
+  console.warn("⚠️ Advertencia: FIREBASE_API_KEY no detectada.");
+}
 
 export async function POST(req: NextRequest) {
   try {
