@@ -1,14 +1,17 @@
-name: LaCuchara Full Stack Deployment
+name: LaCuchara Unified Deployment
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # Permite ejecución manual desde la pestaña Actions
+  workflow_dispatch: # Permite ejecutarlo manualmente
 
 jobs:
-  # --- TRABAJO 1: COMPILACIÓN Y DESPLIEGUE NEXT.JS ---
-  build-and-deploy-web:
+  # --- TRABAJO 1: COMPILACIÓN DE NEXT.JS (WEB) ---
+  build-frontend:
     runs-on: ubuntu-latest
+    # Si creaste el Environment "Production", descomenta la siguiente línea:
+    # environment: Production 
+    
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -19,27 +22,21 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install Frontend Dependencies
+      - name: Install Dependencies
         run: npm install
 
       - name: Next.js Build
         run: npm run build
         env:
-          # Variables necesarias para la compilación (Server Actions/Static Props)
-          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          # --- AQUÍ PROTEGEMOS TU KEY ---
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
 
-      # Aquí iría el paso final de despliegue (ejemplo para Vercel o Azure)
-      # - name: Deploy to Vercel
-      #   uses: amondnet/vercel-action@v20
-      #   with: ...
-
-  # --- TRABAJO 2: PIPELINE DE IA (PROCESAMIENTO) ---
+  # --- TRABAJO 2: PIPELINE DE IA (PYTHON) ---
   run-ai-pipeline:
     runs-on: ubuntu-latest
-    # Este job se ejecutará solo si el de la web termina con éxito
-    needs: build-and-deploy-web 
+    needs: build-frontend # Solo corre si la web compila bien
+    # environment: Production
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -52,17 +49,10 @@ jobs:
 
       - name: Install Python Dependencies
         run: |
-          pip install -r ai_pipeline/requirements.txt
+          if [ -f ai_pipeline/requirements.txt ]; then
+            pip install -r ai_pipeline/requirements.txt
+          fi
 
-      - name: Run OCR Processing Script
-        env:
-          AZURE_OCR_KEY: ${{ secrets.AZURE_OCR_KEY }}
-          AZURE_OCR_ENDPOINT: ${{ secrets.AZURE_OCR_ENDPOINT }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          DB_URL: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+      - name: Run OCR and Processing
         run: python ai_pipeline/scripts/process_menu_ocr.py
-
-      - name: Update Synthetic Data (Optional)
-        env:
-          DB_URL: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        run: python ai_pipeline/scripts/generate_synthetic_data.py
+        
